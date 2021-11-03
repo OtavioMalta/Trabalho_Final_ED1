@@ -34,7 +34,7 @@ void mtz_print(mtz *mat){
     for (int i = 0; i < mat->row; i++){
         for (int j = 0; j < mat->col; j++) {
             mtz_get(mat, i,j, &aux);
-            printf("%d\t ", aux);
+            printf("%d\t", aux);
         }
         printf("\n");
     }
