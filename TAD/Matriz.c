@@ -1,4 +1,6 @@
 #include "matriz.h"
+#include <stdio.h>
+#include <stdlib.h>
 struct mtz{
     int *data;
     int row;

@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "TMain.h"
-#include "Matriz.h"
+#include "tad/TMain.h"
+#include "tad/Matriz.h"
 
 int main(int argc, char *argv[])
 {
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
         mtz_free(mat);
     }else if(strcmp(argv[1], "-convert")==0){
         if (argc != 4){
-            printf("Falta argumentos");
+            printf("[ERRO] Confira a quantidade de argumentos!");
             exit(0);
         }
         int res = convert(argv[2], argv[3]);
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
         return 0;
     }else if(strcmp(argv[1], "-segment")==0){
         if (argc != 5){
-            printf("Falta argumentos");
+            printf("[ERRO] Confira a quantidade de argumentos!");
             exit(0);
         }
         int thr = atoi(argv[2]);
@@ -59,12 +59,18 @@ int main(int argc, char *argv[])
         return 0;
     }else if(strcmp(argv[1], "-type")==0){
         int i = type_of(argv[2]);
-        printf("%d", i);
+        if(i == 10){
+            printf("Arquivo .txt");
+        }else if(i == 20){
+            printf("Arquivo .imm");
+        }else{
+            printf("[ERRO] Tipo incompativel!");
+        }
     }
-    else if(strcmp(argv[1], "-cc")){
+    else if(strcmp(argv[1], "-cc")==0){
         printf("\nCC com sucesso");
         return 0;
-    }else if(strcmp(argv[1], "-lab")){
+    }else if(strcmp(argv[1], "-lab")==0){
         printf("\nLAB com sucesso");
         return 0;
     }else{
