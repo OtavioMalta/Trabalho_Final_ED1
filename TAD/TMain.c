@@ -87,6 +87,7 @@ int convert(char *c1, char *c2){ // Função para converter um arquivo .txt para
     }
     return INCOMPATIBLE_TYPE;
 }
+
 int segment(int thr, char *c1, char *c2){ // Função para transformar os dados de um arquivo txt e/ou imm em 1 ou 0, dependendo de thr
     mtz *mat;
     
@@ -94,7 +95,10 @@ int segment(int thr, char *c1, char *c2){ // Função para transformar os dados 
 
     aux = open_file(c1, &mat); // Abre o arquivo c1 a ser segmentado e atribui seus dados a uma matriz
     if (aux != SUCCESS){return UNDEFINED_ERROR;}
-
+    
+    aux = tam_file(c2, &row, &col); // Recebe a quantidade de linhas e colunas presentes no arquivo
+    if(aux!=0){return UNDEFINED_ERROR;}
+    
     mtz_grow(mat, &row); // Pega a quantidade de linhas da matriz c1
     mtz_gcol(mat, &col); // Pega a quantidade de colunas da matriz c1
     
@@ -108,12 +112,13 @@ int segment(int thr, char *c1, char *c2){ // Função para transformar os dados 
                 mtz_set(mat, i, j, 1); //..se não transforma em 1
             }
         }
+        mtz_set(mat, i, j, '\t');
     }
     set_mat(mat, c2); // Atribui os dados da matriz no arquvivo c2
     mtz_free(mat);
-
     return SUCCESS;
 }
+
 int set_mat(mtz *mat, char *res){ // Função para atribuir os dados de uma matriz em um arquivo txt ou imm
     FILE *fl;
     int num, aux, i, j, row, col;
@@ -141,6 +146,7 @@ int set_mat(mtz *mat, char *res){ // Função para atribuir os dados de uma matr
         return SUCCESS;
     }
 }
+
 int tam_file(char *file, int *l, int *c){ // Função para determinar a quantidade de linhas e colunas de um arquivo .txt ou .imm
     FILE *fl;
     int aux, num = 0, row = 1, col = 1;
