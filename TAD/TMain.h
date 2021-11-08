@@ -7,11 +7,13 @@
 #include "Matriz.h"
 
 
-int open_file(char *file, mtz **mat);
-int convert(char *c1, char *c2);
-int segment(int thr, char name1[], char name2[]);
+int open_file(char *file, mtz **mat); // OK
+int convert(char *c1, char *c2); // OK
+int segment(int thr, char name1[], char name2[]); // Com Bug
 
-int tam_file(char *file, int *l, int *c);
-int type_of(char *file);
-int set_mat(mtz *mat, char *res);
+int tam_file(char *file, int *l, int *c); // OK
+int type_of(char *file); // OK
+int set_mat(char *file,mtz *mat); // OK
+int set_arq(char *file, mtz **mat); // OK
 
+int seg(int thr, char *c1, char *c2, mtz *mat); // Com Bug

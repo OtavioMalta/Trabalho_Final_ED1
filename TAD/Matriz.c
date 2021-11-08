@@ -1,4 +1,4 @@
-#include "matriz.h"
+#include "Matriz.h"
 #include <stdio.h>
 #include <stdlib.h>
 struct mtz{

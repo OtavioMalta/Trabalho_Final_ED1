@@ -13,12 +13,12 @@ struct node{
     ponto data;
 };
 
-int TStack_tam(TStack *st){
+int stack_tam(TStack *st){
     if(st==NULL){return INVALID_NULL_POINTER;}
     return st->tam;
 }
 
-TStack *TStack_create(){
+TStack *stack_create(){
     TStack *st;
     st = malloc(sizeof(TStack));
     if(st != NULL){
@@ -28,7 +28,7 @@ TStack *TStack_create(){
     return st;
 }
 
-int  TStack_free(TStack *st){
+int stack_free(TStack *st){
     node *no, *no2;
 
     if(st==NULL){return INVALID_NULL_POINTER;}
@@ -45,7 +45,7 @@ int  TStack_free(TStack *st){
     return SUCCESS;
 }
 
-int TStack_print(TStack *st){
+int stack_print(TStack *st){
     node *no;
     if(st==NULL){return INVALID_NULL_POINTER;}
     if(st->tam == 0){return ELEM_NOT_FOUND;}
@@ -59,7 +59,7 @@ int TStack_print(TStack *st){
     return SUCCESS;
 }
 
-int TStack_pop(TStack *st){
+int stack_pop(TStack *st){
     node *no;
 
     if(st==NULL){return INVALID_NULL_POINTER;}
@@ -79,7 +79,7 @@ int TStack_pop(TStack *st){
         return SUCCESS;
 }
 
-int TStack_top(TStack *st, ponto *p){
+int stack_top(TStack *st, ponto *p){
 
     if(st==NULL){return INVALID_NULL_POINTER;}
 
@@ -88,7 +88,7 @@ int TStack_top(TStack *st, ponto *p){
     return SUCCESS;
 }
 
-int TStack_push(TStack *st, ponto p){
+int stack_push(TStack *st, ponto p){
     node *no;
 
     if(st==NULL){return INVALID_NULL_POINTER;}
