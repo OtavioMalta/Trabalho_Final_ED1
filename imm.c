@@ -68,7 +68,16 @@ int main(int argc, char *argv[])
         }
     }
     else if(strcmp(argv[1], "-cc")==0){
-        printf("\nCC com sucesso");
+        if (argc != 4){
+            printf("[ERRO] Confira a quantidade de argumentos!");
+            exit(0);
+        }
+        int res = cc(argv[2], argv[3]);
+        if(res!=SUCCESS){
+            printf("[ERRO %d]", res);
+        } else{
+            printf("\nCC com sucesso!");
+        }
         return 0;
     }else if(strcmp(argv[1], "-lab")==0){
         printf("\nLAB com sucesso");

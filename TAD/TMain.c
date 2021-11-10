@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "TMain.h"
+#include "TStack.h"
 
 int open_file(char *file, mtz **mat)
 { // Função para devolver uma matriz com os dados
@@ -120,8 +121,7 @@ int seg(int thr, char *c1, char *c2, mtz *mat)
     return SUCCESS;
 }
 
-int componentConnected(char *entrance, char *exit)
-{
+int componentConnected(char *entrance, char *exit){
     int nrows, ncolumns;
     mtz *me, *ms;
     ms = mtz_create(nrows, ncolumns);
@@ -134,21 +134,16 @@ int componentConnected(char *entrance, char *exit)
             return UNDEFINED_ERROR;
         }
 
-    
-
-    if ((compCon(me, ms)) == SUCCESS)
-    {
-        if (convert (entrance, exit) == SUCCESS)
-        {
+    if ((compCon(me, ms)) == SUCCESS){
+        if (convert (entrance, exit) == SUCCESS){
             return SUCCESS;
         }
-        else
-        {
+        else{
             return UNDEFINED_ERROR;
         }
     }
-    free (me);
-    free (ms);
+    mtz_free(me);
+    mtz_free(ms);
 }
 
 int compCon(mtz *matEntrance, mtz *matExit)
@@ -252,10 +247,8 @@ int set_mat(char *file, mtz *mat)
         fwrite(&row, sizeof(int), 1, fl); // Atribui no arquivo c2 a quantidade de linhas
         fwrite(&col, sizeof(int), 1, fl); // Atribui no arquvio c2 a quantidade de colunas
 
-        for (i = 0; i < row; i++)
-        { // Percorre o arquivo e a matriz
-            for (j = 0; j < col; j++)
-            {
+        for (i = 0; i < row; i++){ // Percorre o arquivo e a matriz
+            for (j = 0; j < col; j++){
                 printf("");
                 mtz_get(mat, i, j, &num);         // Lê os dados da matriz
                 fwrite(&num, sizeof(int), 1, fl); // Coloca no arquivo

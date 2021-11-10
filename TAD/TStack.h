@@ -19,5 +19,4 @@ int stack_top(TStack *st, struct ponto *p);
 
 int stack_size(TStack *st);
 int stack_print(TStack *st);
-int stack_tam(TStack *st);
 #endif
