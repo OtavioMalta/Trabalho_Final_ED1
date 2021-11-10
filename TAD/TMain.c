@@ -123,24 +123,21 @@ int seg(int thr, char *c1, char *c2, mtz *mat)
 int componentConnected(char *entrance, char *exit){
     int nrows, ncolumns;
     mtz *me, *ms;
-    ms = mtz_create(nrows, ncolumns);
     if ((open_file(entrance, &me)) != SUCCESS)
-    {
+    {   
         return UNDEFINED_ERROR;
     }
+    
     if ((mtz_gdata(me, &nrows, &ncolumns)) != SUCCESS)
         {
             return UNDEFINED_ERROR;
         }
+    ms = mtz_create(nrows, ncolumns);
 
-    if ((compCon(me, ms)) == SUCCESS){
-        if (convert (entrance, exit) == SUCCESS){
-            return SUCCESS;
-        }
-        else{
+    if ((compCon(me, ms)) != SUCCESS){
             return UNDEFINED_ERROR;
-        }
     }
+
     mtz_free(me);
     mtz_free(ms);
 }
@@ -162,11 +159,11 @@ int compCon(mtz *matEntrance, mtz *matExit)
         { // percorre toda a matriz
             p.x = i;
             p.y = j;
-            mtz_set(matEntrance, p.x, p.y, img);  // pega dados matriz de entrada
+            mtz_get(matEntrance, p.x, p.y, &img);  // pega dados matriz de entrada
             mtz_get (matExit, p.x, p.y, &img_root); // pega dados matriz de saida
             if ((img == 1) && (img_root == 0))
             {
-                mtz_set(matEntrance, p.x, p.y, label); // colocando o label na pos (i,j) matriz saida
+                mtz_set(matExit, p.x, p.y, label); // colocando o label na pos (i,j) matriz saida
                 stack_push(stack, p);                                // anexa o ponto na pilha
                 while (stack_size(stack) != 0)                       // se for diferente de 0 vou buscar o prox dos conexos
                 {
@@ -182,7 +179,7 @@ int compCon(mtz *matEntrance, mtz *matExit)
                         mtz_get(matExit, p.x, p.y, &img_root); // pega valores da matriz saida e coloca em img_root 
                         if ((img == 1) && (img_root == 0))                   // verifica se os pontos não são 1 e não foi rotulado
                         {
-                            mtz_get(matExit, p.x, p.y, label); // atribui o label a posição (i,j) da matriz saida
+                            mtz_set(matExit, p.x, p.y, label); // atribui o label a posição (i,j) da matriz saida
                             stack_push(stack, p);                             // empilha para verificar vizinhos no proximo laço
                         }
                         p.x = p_aux.x;
@@ -192,7 +189,8 @@ int compCon(mtz *matEntrance, mtz *matExit)
                 label++;
             }
         }
-    }
+    }    
+    mtz_print(matExit);
     stack_free(stack);
     return SUCCESS;
 }
