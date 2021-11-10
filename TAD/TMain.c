@@ -138,7 +138,7 @@ int componentConnected(char *entrance, char *exit)
 
     if ((compCon(me, ms)) == SUCCESS)
     {
-        if (convert(entrance, exit) == SUCCESS)
+        if (convert (entrance, exit) == SUCCESS)
         {
             return SUCCESS;
         }
@@ -147,6 +147,8 @@ int componentConnected(char *entrance, char *exit)
             return UNDEFINED_ERROR;
         }
     }
+    free (me);
+    free (ms);
 }
 
 int compCon(mtz *matEntrance, mtz *matExit)
