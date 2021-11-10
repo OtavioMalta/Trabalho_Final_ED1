@@ -154,7 +154,7 @@ int compCon(mtz *matEntrance, mtz *matExit)
     int row, column;
     int img;
     int img_root;
-    int label = 1;                  // sera usaro para diferenciar
+    int label = 1;                  // sera usado para diferenciar
     TStack *stack = stack_create(); // fazendo uma pilha para comparar
     ponto p, p_att, p_aux;
     if (mtz_gdata(matEntrance->data, &row, &column) != SUCCESS)
@@ -170,9 +170,9 @@ int compCon(mtz *matEntrance, mtz *matExit)
             mat2D_get_value(matExit->data, p.x, p.y, &img_root); // pega dados matriz de saida
             if ((img == 1) && (img_root == 0))
             {
-                mat2D_set_value(matEntrance->data, p.x, p.y, label); // atribui o label a posição (i,j) da img->matriz saida
-                stack_push(stack, p);                                // coloca o elemento na pilha
-                while (stack_size(stack) != 0)                       // se for diferente de 0 vou buscar o prox do conjunto
+                mat2D_set_value(matEntrance->data, p.x, p.y, label); // colocando o label na pos (i,j) matriz saida
+                stack_push(stack, p);                                // anexa o ponto na pilha
+                while (stack_size(stack) != 0)                       // se for diferente de 0 vou buscar o prox dos conexos
                 {
                     stack_find(stack, &p_att);  // pega prox item
                     stack_pop(stack);           // retira item da pilha
