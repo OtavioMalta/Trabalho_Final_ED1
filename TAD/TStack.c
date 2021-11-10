@@ -13,6 +13,12 @@ struct node{
     ponto data;
 };
 
+struct ponto{
+    int x;
+    int y;
+
+};
+
 int stack_size(TStack *st){
     if(st==NULL){return INVALID_NULL_POINTER;}
     return st->tam;

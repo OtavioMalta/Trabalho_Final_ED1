@@ -8,6 +8,8 @@
 #define OUT_OF_RANGE -3
 #define ELEM_NOT_FOUND -4
 
+typedef struct ponto ponto;
+
 typedef struct TStack TStack;
 
 TStack *stack_create();

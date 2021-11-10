@@ -104,7 +104,6 @@ int seg(int thr, char *c1, char *c2, mtz *mat)
         for (j = 0; j < col; j++)
         {
             mtz_get(mat, i, j, &num); // Lê os dados da matriz
-            //printf("", num);          // BUG
             if (num < thr)
             {                          // Se o dado for <= a thr..
                 mtz_set(mat, i, j, 0); // ..transforma em 0..
@@ -114,7 +113,6 @@ int seg(int thr, char *c1, char *c2, mtz *mat)
                 mtz_set(mat, i, j, 1); //..se não transforma em 1
             }
         }
-        //mtz_set(mat, i, j, '\t'); // Adiciona '\t' após todo elemento
     }
     printf("\n"); // Adiciona '\n' no final de toda linha
     return SUCCESS;
