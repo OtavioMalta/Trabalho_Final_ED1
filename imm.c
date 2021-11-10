@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
             printf("[ERRO] Confira a quantidade de argumentos!");
             exit(0);
         }
-        int res = cc(argv[2], argv[3]);
+        int res = componentConnected(argv[2], argv[3]);
         if(res!=SUCCESS){
             printf("[ERRO %d]", res);
         } else{

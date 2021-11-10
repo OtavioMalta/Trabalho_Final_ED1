@@ -18,3 +18,8 @@ int set_mat(char *file,mtz *mat); // OK
 int set_arq(char *file, mtz **mat); // OK
 
 int seg(int thr, char *c1, char *c2, mtz *mat); // Com Bug
+
+
+int componentConnected(char *entrance, char *exit);
+
+int compCon(mtz *matEntrance, mtz *matExit);
