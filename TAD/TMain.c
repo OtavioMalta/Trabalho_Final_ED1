@@ -159,11 +159,9 @@ int set_mat(char *file, mtz *mat)
 
         for (i = 0; i < row; i++){ // Percorre o arquivo e a matriz
             for (j = 0; j < col; j++){
-                printf("");
                 mtz_get(mat, i, j, &num);         // Lê os dados da matriz
                 fwrite(&num, sizeof(int), 1, fl); // Coloca no arquivo
             }
-            fprintf(fl, "\n"); // Coloca ao final de toda linha um '\n'
         }
         return SUCCESS;
     }
@@ -191,11 +189,13 @@ int tam_file(char *file, int *l, int *c)
             {          // Se for quebra de linha..
                 row++; // ..adiciona uma linha na contagem..
             }
-            else if (row == 1 && (ch == '\t' || ch == ' '))
+            else if (ch == '\t')
             {          //..se a contagem de linha for 1 e o caracter for um tab ou um espaço..
                 col++; //..adiciona uma coluna na contagem
             }
         }
+        col = col/row+1;
+        
         if (row == 0 || col == 0)
         {
             return UNDEFINED_ERROR;
@@ -274,7 +274,7 @@ int set_arq(char *file, mtz **mat)
 
         *mat = mtz_create(row, col); // Cria uma matriz
 
-        for (int i = 0; i < row; i++)
+        for (int i = 1; i < row; i++)
         { // Percorre o arquivo e a matriz
             for (int j = 0; j < col; j++)
             {
@@ -334,7 +334,7 @@ int compCon(mtz *matEntrance, mtz *matExit)
             mtz_get(matEntrance, p.x, p.y, &img);  // pega dados matriz de entrada
             
             mtz_get (matExit, p.x, p.y, &img_root); // pega dados matriz de saida
-            if ((img == 1) && (img_root == 0))
+            if ((img == 1))
             {
                 mtz_set(matExit, p.x, p.y, label); // colocando o label na pos (i,j) matriz saida
                 stack_push(stack, p);                                // anexa o ponto na pilha
@@ -350,7 +350,7 @@ int compCon(mtz *matEntrance, mtz *matExit)
                         p.y = p_att.y - (l == 2) + (l == 3);                 //  d == 2 esquerda, d == 3 direita
                         mtz_get(matEntrance, p.x, p.y, &img);  // pega valores matriz entrada e coloca em img
                         mtz_get(matExit, p.x, p.y, &img_root); // pega valores da matriz saida e coloca em img_root 
-                        if ((img == 1) && (img_root == 0))                   // verifica se os pontos não são 1 e não foi rotulado
+                        if ((img == 1))                   // verifica se os pontos não são 1 e não foi rotulado
                         {
                             mtz_set(matExit, p.x, p.y, label); // atribui o label a posição (i,j) da matriz saida
                             stack_push(stack, p);                             // empilha para verificar vizinhos no proximo laço

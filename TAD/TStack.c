@@ -1,6 +1,7 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include"TStack.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "TStack.h"
+
 typedef struct node node;
 
 struct TStack{
@@ -13,11 +14,7 @@ struct node{
     ponto data;
 };
 
-struct ponto{
-    int x;
-    int y;
 
-};
 
 int stack_size(TStack *st){
     if(st==NULL){return INVALID_NULL_POINTER;}

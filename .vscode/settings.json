@@ -1,3 +1,8 @@
 {
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Disabled",
+    "files.associations": {
+        "tmain.h": "c",
+        "matriz.h": "c",
+        "tstack.h": "c"
+    }
 }

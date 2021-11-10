@@ -1,6 +1,6 @@
 #ifndef _TStack_
 #define _TStack_
-#include "ponto.h"
+
 #define MAX 100
 #define SUCCESS 0
 #define INVALID_NULL_POINTER -1
@@ -8,9 +8,13 @@
 #define OUT_OF_RANGE -3
 #define ELEM_NOT_FOUND -4
 
-typedef struct ponto ponto;
-
 typedef struct TStack TStack;
+
+typedef struct ponto{
+    int x;
+    int y;
+
+}ponto;
 
 TStack *stack_create();
 int stack_free(TStack *st);
