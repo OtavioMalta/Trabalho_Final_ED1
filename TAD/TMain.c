@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "TMain.h"
-#include "TStack.h"
 
 int open_file(char *file, mtz **mat)
 { // Função para devolver uma matriz com os dados
@@ -129,7 +128,7 @@ int componentConnected(char *entrance, char *exit){
     {
         return UNDEFINED_ERROR;
     }
-    if (mtz_gdata(me, &nrows, &ncolumns)) != SUCCESS)
+    if ((mtz_gdata(me, &nrows, &ncolumns)) != SUCCESS)
         {
             return UNDEFINED_ERROR;
         }
@@ -154,20 +153,20 @@ int compCon(mtz *matEntrance, mtz *matExit)
     int label = 1;                  // sera usado para diferenciar
     TStack *stack = stack_create(); // fazendo uma pilha para comparar
     ponto p, p_att, p_aux;
-    if (mtz_gdata(matEntrance->data, &row, &column) != SUCCESS)
+    if (mtz_gdata(matEntrance, &row, &column) != SUCCESS)
         return UNDEFINED_ERROR;
 
     for (int i = 0; i < row; i++)
     {
         for (int j = 0; j < column; j++)
-        { // percorre toda a imagem
+        { // percorre toda a matriz
             p.x = i;
             p.y = j;
-            mtz_set(matEntrance->data, p.x, p.y, &img);  // pega dados matriz de entrada
-            mtz_get (matExit->data, p.x, p.y, &img_root); // pega dados matriz de saida
+            mtz_set(matEntrance, p.x, p.y, img);  // pega dados matriz de entrada
+            mtz_get (matExit, p.x, p.y, &img_root); // pega dados matriz de saida
             if ((img == 1) && (img_root == 0))
             {
-                mtz_set(matEntrance->data, p.x, p.y, label); // colocando o label na pos (i,j) matriz saida
+                mtz_set(matEntrance, p.x, p.y, label); // colocando o label na pos (i,j) matriz saida
                 stack_push(stack, p);                                // anexa o ponto na pilha
                 while (stack_size(stack) != 0)                       // se for diferente de 0 vou buscar o prox dos conexos
                 {
@@ -179,8 +178,8 @@ int compCon(mtz *matEntrance, mtz *matExit)
                         p_aux.y = p.y;
                         p.x = p_att.x - (l == 0) + (l == 1);                 // d == 0 baixo, d == 1 cima
                         p.y = p_att.y - (l == 2) + (l == 3);                 //  d == 2 esquerda, d == 3 direita
-                        mtz_get(matEntrance->data, p.x, p.y, &img);  // pega valores matriz entrada e coloca em img
-                        mtz_get(matExit->data, p.x, p.y, &img_root); // pega valores da matriz saida e coloca em img_root 
+                        mtz_get(matEntrance, p.x, p.y, &img);  // pega valores matriz entrada e coloca em img
+                        mtz_get(matExit, p.x, p.y, &img_root); // pega valores da matriz saida e coloca em img_root 
                         if ((img == 1) && (img_root == 0))                   // verifica se os pontos não são 1 e não foi rotulado
                         {
                             mtz_get(matExit, p.x, p.y, label); // atribui o label a posição (i,j) da matriz saida
