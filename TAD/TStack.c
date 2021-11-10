@@ -108,4 +108,5 @@ int stack_push(TStack *st, ponto p){
         st->head = no;
     }
     return SUCCESS;
+    
 }

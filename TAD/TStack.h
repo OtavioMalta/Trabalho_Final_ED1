@@ -1,6 +1,5 @@
 #ifndef _TStack_
 #define _TStack_
-
 #include "ponto.h"
 #define MAX 100
 #define SUCCESS 0
