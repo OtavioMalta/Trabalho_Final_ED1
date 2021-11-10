@@ -170,7 +170,7 @@ int compCon(mtz *matEntrance, mtz *matExit)
                 stack_push(stack, p);                                // anexa o ponto na pilha
                 while (stack_size(stack) != 0)                       // se for diferente de 0 vou buscar o prox dos conexos
                 {
-                    stack_find(stack, &p_att);  // pega prox item
+                    stack_top(stack, &p_att);  // pega prox item
                     stack_pop(stack);           // retira item da pilha
                     for (int l = 0; l < 4; l++) // verifica os vizinhos do atual ponto
                     {
