@@ -182,12 +182,12 @@ int compCon(mtz *matEntrance, mtz *matExit)
                         p_aux.y = p.y;
                         p.x = p_att.x - (l == 0) + (l == 1);                 // d == 0 baixo, d == 1 cima
                         p.y = p_att.y - (l == 2) + (l == 3);                 //  d == 2 esquerda, d == 3 direita
-                        mat2D_get_value(matEntrance->data, p.x, p.y, &img);  // obtém valores da img->matriz entrada e amarzena-os em dadosim
-                        mat2D_get_value(matExit->data, p.x, p.y, &img_root); // obtém valores da img->matriz saida e amarzena-os em dadosrot
+                        mat2D_get_value(matEntrance->data, p.x, p.y, &img);  // pega valores matriz entrada e coloca em img
+                        mat2D_get_value(matExit->data, p.x, p.y, &img_root); // pega valores da matriz saida e coloca em img_root 
                         if ((img == 1) && (img_root == 0))                   // verifica se os pontos não são 1 e não foi rotulado
                         {
-                            mat2D_set_value(mat_Exit->data, p.x, p.y, label); // atribui o label a posição (i,j) da img->matriz saida
-                            stack_push(stack, p);                             // empilha para verificar vizinhos posteriormente
+                            mat2D_set_value(mat_Exit->data, p.x, p.y, label); // atribui o label a posição (i,j) da matriz saida
+                            stack_push(stack, p);                             // empilha para verificar vizinhos no proximo laço
                         }
                         p.x = p_aux.x;
                         p.y = p_aux.y;
