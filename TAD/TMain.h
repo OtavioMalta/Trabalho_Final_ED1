@@ -5,6 +5,7 @@
 #define INCOMPATIBLE_TYPE -2
 #define UNDEFINED_ERROR -3
 #include "Matriz.h"
+#include "TStack.h"
 
 
 int open_file(char *file, mtz **mat); // OK
