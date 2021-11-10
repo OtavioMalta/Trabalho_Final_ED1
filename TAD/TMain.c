@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "TMain.h"
+#include "TStack.h"
 
 int open_file(char *file, mtz **mat){ // Função para devolver uma matriz com os dados
     int aux;
@@ -106,7 +107,7 @@ int set_mat(char *file, mtz *mat){ // Função para atribuir os dados de uma mat
 
         fwrite(&row, sizeof(int), 1, fl); // Atribui no arquivo c2 a quantidade de linhas
         fwrite(&col, sizeof(int), 1, fl); // Atribui no arquvio c2 a quantidade de colunas
-        
+
         for (i = 0; i < row; i++){ // Percorre o arquivo e a matriz
             for (j = 0; j < col; j++){
                 printf("");
