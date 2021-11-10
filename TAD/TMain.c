@@ -104,7 +104,7 @@ int seg(int thr, char *c1, char *c2, mtz *mat)
         for (j = 0; j < col; j++)
         {
             mtz_get(mat, i, j, &num); // Lê os dados da matriz
-            printf("", num);          // BUG
+            //printf("", num);          // BUG
             if (num < thr)
             {                          // Se o dado for <= a thr..
                 mtz_set(mat, i, j, 0); // ..transforma em 0..
@@ -114,94 +114,10 @@ int seg(int thr, char *c1, char *c2, mtz *mat)
                 mtz_set(mat, i, j, 1); //..se não transforma em 1
             }
         }
-        mtz_set(mat, i, j, '\t'); // Adiciona '\t' após todo elemento
+        //mtz_set(mat, i, j, '\t'); // Adiciona '\t' após todo elemento
     }
     printf("\n"); // Adiciona '\n' no final de toda linha
     return SUCCESS;
-}
-
-int componentConnected(char *entrance, char *exit){
-    int nrows, ncolumns;
-    mtz *me, *ms;
-    if ((open_file(entrance, &me)) != SUCCESS)
-    {   
-        return UNDEFINED_ERROR;
-    }
-    
-    if ((mtz_gdata(me, &nrows, &ncolumns)) != SUCCESS)
-        {
-            return UNDEFINED_ERROR;
-        }
-    ms = mtz_create(nrows, ncolumns);
-
-    if ((compCon(me, ms)) != SUCCESS){
-            return UNDEFINED_ERROR;
-    }
-
-    mtz_free(me);
-    mtz_free(ms);
-}
-
-int compCon(mtz *matEntrance, mtz *matExit)
-{
-    int row, column;
-    int img;
-    int img_root;
-    int label = 1;                  // sera usado para diferenciar
-    TStack *stack = stack_create(); // fazendo uma pilha para comparar
-    ponto p, p_att, p_aux;
-    if (mtz_gdata(matEntrance, &row, &column) != SUCCESS)
-        return UNDEFINED_ERROR;
-
-    for (int i = 0; i < row; i++)
-    {
-        for (int j = 0; j < column; j++)
-        { // percorre toda a matriz
-            p.x = i;
-            p.y = j;
-            mtz_get(matEntrance, p.x, p.y, &img);  // pega dados matriz de entrada
-            mtz_get (matExit, p.x, p.y, &img_root); // pega dados matriz de saida
-            if ((img == 1) && (img_root == 0))
-            {
-                mtz_set(matExit, p.x, p.y, label); // colocando o label na pos (i,j) matriz saida
-                stack_push(stack, p);                                // anexa o ponto na pilha
-                while (stack_size(stack) != 0)                       // se for diferente de 0 vou buscar o prox dos conexos
-                {
-                    stack_top(stack, &p_att);  // pega prox item
-                    stack_pop(stack);           // retira item da pilha
-                    for (int l = 0; l < 4; l++) // verifica os vizinhos do atual ponto
-                    {
-                        p_aux.x = p.x;
-                        p_aux.y = p.y;
-                        p.x = p_att.x - (l == 0) + (l == 1);                 // d == 0 baixo, d == 1 cima
-                        p.y = p_att.y - (l == 2) + (l == 3);                 //  d == 2 esquerda, d == 3 direita
-                        mtz_get(matEntrance, p.x, p.y, &img);  // pega valores matriz entrada e coloca em img
-                        mtz_get(matExit, p.x, p.y, &img_root); // pega valores da matriz saida e coloca em img_root 
-                        if ((img == 1) && (img_root == 0))                   // verifica se os pontos não são 1 e não foi rotulado
-                        {
-                            mtz_set(matExit, p.x, p.y, label); // atribui o label a posição (i,j) da matriz saida
-                            stack_push(stack, p);                             // empilha para verificar vizinhos no proximo laço
-                        }
-                        p.x = p_aux.x;
-                        p.y = p_aux.y;
-                    }
-                }
-                label++;
-            }
-        }
-    }    
-    mtz_print(matExit);
-    stack_free(stack);
-    return SUCCESS;
-}
-
-int labirinto()
-{
-
-}
-
-int lab()
-{
 }
 
 int set_mat(char *file, mtz *mat)
@@ -224,7 +140,6 @@ int set_mat(char *file, mtz *mat)
             for (j = 0; j < col; j++)
             {
                 mtz_get(mat, i, j, &num); // Lê os dados da matriz
-                printf("");
                 fprintf(fl, "%d ", num); // Coloca no arquivo
             }
             fprintf(fl, "\n"); // Coloca ao final de toda linha um '\n'
@@ -373,3 +288,84 @@ int set_arq(char *file, mtz **mat)
         return SUCCESS;
     }
 }
+
+int componentConnected(char *entrance, char *exit){
+    int nrows, ncolumns;
+    mtz *me, *ms;
+    if ((open_file(entrance, &me)) != SUCCESS)
+    {   
+        return UNDEFINED_ERROR;
+    }
+    
+    if ((mtz_gdata(me, &nrows, &ncolumns)) != SUCCESS)
+        {
+            return UNDEFINED_ERROR;
+        }
+
+    ms = mtz_create(nrows, ncolumns);
+    for (int i = 0; i < nrows; i++){
+        for (int j = 0; j < ncolumns; j++){
+            mtz_set(ms, i,j, 0);
+        }
+    }
+    if ((compCon(me, ms)) != SUCCESS){
+            return UNDEFINED_ERROR;
+    }
+    set_mat(exit, ms);
+    mtz_free(me);
+    mtz_free(ms);
+}
+
+int compCon(mtz *matEntrance, mtz *matExit)
+{
+    int row, column;
+    int img;
+    int img_root;
+    int label = 1;                  // sera usado para diferenciar
+    TStack *stack = stack_create(); // fazendo uma pilha para comparar
+    ponto p, p_att, p_aux;
+    if (mtz_gdata(matEntrance, &row, &column) != SUCCESS){
+        return UNDEFINED_ERROR;
+    }
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < column; j++)
+        { // percorre toda a matriz
+            p.x = i;
+            p.y = j;
+            mtz_get(matEntrance, p.x, p.y, &img);  // pega dados matriz de entrada
+            
+            mtz_get (matExit, p.x, p.y, &img_root); // pega dados matriz de saida
+            if ((img == 1) && (img_root == 0))
+            {
+                mtz_set(matExit, p.x, p.y, label); // colocando o label na pos (i,j) matriz saida
+                stack_push(stack, p);                                // anexa o ponto na pilha
+                while (stack_size(stack) != 0)                       // se for diferente de 0 vou buscar o prox dos conexos
+                {
+                    stack_top(stack, &p_att);  // pega prox item
+                    stack_pop(stack);           // retira item da pilha
+                    for (int l = 0; l < 4; l++) // verifica os vizinhos do atual ponto
+                    {
+                        p_aux.x = p.x;
+                        p_aux.y = p.y;
+                        p.x = p_att.x - (l == 0) + (l == 1);                 // d == 0 baixo, d == 1 cima
+                        p.y = p_att.y - (l == 2) + (l == 3);                 //  d == 2 esquerda, d == 3 direita
+                        mtz_get(matEntrance, p.x, p.y, &img);  // pega valores matriz entrada e coloca em img
+                        mtz_get(matExit, p.x, p.y, &img_root); // pega valores da matriz saida e coloca em img_root 
+                        if ((img == 1) && (img_root == 0))                   // verifica se os pontos não são 1 e não foi rotulado
+                        {
+                            mtz_set(matExit, p.x, p.y, label); // atribui o label a posição (i,j) da matriz saida
+                            stack_push(stack, p);                             // empilha para verificar vizinhos no proximo laço
+                        }
+                        p.x = p_aux.x;
+                        p.y = p_aux.y;
+                    }
+                }
+                label++;
+            }
+        }
+    }
+    stack_free(stack);
+    return SUCCESS;
+}
+
