@@ -228,6 +228,7 @@ int tam_file(char *file, int *l, int *c)
     }
 }
 
+
 int set_arq(char *file, mtz **mat)
 { // Função para atribuir os dados de um arquivo em uma matriz
     FILE *fl;
