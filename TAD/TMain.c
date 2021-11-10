@@ -168,11 +168,11 @@ int compCon(mtz *matEntrance, mtz *matExit)
         { // percorre toda a imagem
             p.x = i;
             p.y = j;
-            mat2D_get_value(matEntrance->data, p.x, p.y, &img);  // pega dados matriz de entrada
-            mat2D_get_value(matExit->data, p.x, p.y, &img_root); // pega dados matriz de saida
+            mtz_set(matEntrance->data, p.x, p.y, &img);  // pega dados matriz de entrada
+            mtz_get (matExit->data, p.x, p.y, &img_root); // pega dados matriz de saida
             if ((img == 1) && (img_root == 0))
             {
-                mat2D_set_value(matEntrance->data, p.x, p.y, label); // colocando o label na pos (i,j) matriz saida
+                mtz_set(matEntrance->data, p.x, p.y, label); // colocando o label na pos (i,j) matriz saida
                 stack_push(stack, p);                                // anexa o ponto na pilha
                 while (stack_size(stack) != 0)                       // se for diferente de 0 vou buscar o prox dos conexos
                 {
@@ -184,11 +184,11 @@ int compCon(mtz *matEntrance, mtz *matExit)
                         p_aux.y = p.y;
                         p.x = p_att.x - (l == 0) + (l == 1);                 // d == 0 baixo, d == 1 cima
                         p.y = p_att.y - (l == 2) + (l == 3);                 //  d == 2 esquerda, d == 3 direita
-                        mat2D_get_value(matEntrance->data, p.x, p.y, &img);  // pega valores matriz entrada e coloca em img
-                        mat2D_get_value(matExit->data, p.x, p.y, &img_root); // pega valores da matriz saida e coloca em img_root 
+                        mtz_get(matEntrance->data, p.x, p.y, &img);  // pega valores matriz entrada e coloca em img
+                        mtz_get(matExit->data, p.x, p.y, &img_root); // pega valores da matriz saida e coloca em img_root 
                         if ((img == 1) && (img_root == 0))                   // verifica se os pontos não são 1 e não foi rotulado
                         {
-                            mat2D_set_value(mat_Exit->data, p.x, p.y, label); // atribui o label a posição (i,j) da matriz saida
+                            mtz_get(matExit, p.x, p.y, label); // atribui o label a posição (i,j) da matriz saida
                             stack_push(stack, p);                             // empilha para verificar vizinhos no proximo laço
                         }
                         p.x = p_aux.x;
@@ -205,6 +205,7 @@ int compCon(mtz *matEntrance, mtz *matExit)
 
 int labirinto()
 {
+
 }
 
 int lab()
