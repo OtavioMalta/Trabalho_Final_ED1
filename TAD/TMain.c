@@ -173,36 +173,22 @@ int tam_file(char *file, int *l, int *c)
     int aux, num = 0, row = 1, col = 1;
     char ch;
 
-    if (type_of(file) == TXT)
-    {                          // Verifica se o arquivo é txt
+    if (type_of(file) == TXT){ // Verifica se o arquivo é txt
         fl = fopen(file, "r"); // Abre o arquivo para leitura
-        if (fl == NULL)
-        {
-            return INVALID_NULL_POINTER;
-        }
+        if (fl == NULL){return INVALID_NULL_POINTER;}
         char ch;
-
-        while (!feof(fl))
-        {                   // Enquanto não for o final do arquivo
-            ch = fgetc(fl); // Lê o próximo caracter do arquivo
-            if (ch == '\n')
-            {          // Se for quebra de linha..
-                row++; // ..adiciona uma linha na contagem..
-            }
-            else if (ch == '\t')
-            {          //..se a contagem de linha for 1 e o caracter for um tab ou um espaço..
-                col++; //..adiciona uma coluna na contagem
-            }
-        }
-        col = col/row+1;
         
-        if (row == 0 || col == 0)
-        {
-            return UNDEFINED_ERROR;
+        while(!feof(fl)) {// Enquanto não for o final do arquivo
+        ch = fgetc(fl); // Lê o próximo caracter do arquivo
+        if(ch == '\n') { // Se for quebra de linha..
+            row++; // ..adiciona uma linha na contagem..
+        } else if (row == 1 && (ch == '\t' || ch == ' ')){ //..se a contagem de linha for 1 e o caracter for um tab ou um espaço..
+            col++; //..adiciona uma coluna na contagem
+        }
         }
         *l = row; // Atribui a contagem de linha no retorno de linhas
         *c = col; // Atribui a contagem de colunas no retorno de colunas
-
+    
         fclose(fl);
         return SUCCESS;
     }
@@ -274,8 +260,13 @@ int set_arq(char *file, mtz **mat)
         }
 
         *mat = mtz_create(row, col); // Cria uma matriz
+        
+        fread(&num, sizeof(int), 1, fl);
+        if(num != row){return UNDEFINED_ERROR;}
+        fread(&num, sizeof(int), 1, fl); 
+        if(num != col){return UNDEFINED_ERROR;}
 
-        for (int i = 1; i < row; i++)
+        for (int i = 0; i < row; i++)
         { // Percorre o arquivo e a matriz
             for (int j = 0; j < col; j++)
             {
