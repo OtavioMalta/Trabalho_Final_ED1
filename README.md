@@ -26,15 +26,11 @@ Programa cujo executável chamará imm (imm.exe no windows; imm no linux)
 
 <br>
 
-- [ ] imm -cc segfile.imm outfile.imm 
+- [x] imm -cc segfile.imm outfile.imm 
 - Função para detectar os componentes conexos de uma imagem txt ou imm
 
 <br>
 
-- [ ] imm -lab imlab.txt imlabout.txt
-- Função para mostrar o caminho a ser percorrido em um labirinto
-
-<br> 
 
 #
 
