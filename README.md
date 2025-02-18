@@ -1,5 +1,5 @@
 # Trabalho Final de Estrutura de Dados 1 - UFU
-
+![](https://api.visitorbadge.io/api/VisitorHit?user=OtavioMaltaf&repo=Trabalho_Final_ED1&countColor=%237B1E7A) <br>
 <h3> Alunos: </h3>
   Otávio Malta  <br>
   Aléxia Martins
